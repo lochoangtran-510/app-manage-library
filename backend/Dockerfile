@@ -1,5 +1,5 @@
 # Sử dụng Node.js LTS bản nhẹ cho Docker image
-FROM node:18-alpine
+FROM node:22-alpine
 
 # Thiết lập thư mục làm việc trong container
 WORKDIR /app
