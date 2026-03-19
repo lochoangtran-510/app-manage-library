@@ -42,9 +42,22 @@ const startServer = async () => {
     // Kết nối Database
     await connectDB();
     
-    // Sync models (ở giai đoạn phát triển, ta dùng alter: true hoặc manual migrations)
+    // Sync models
     await db.sequelize.sync({ alter: true });
     console.log('✅ All tables synchronized in PostgreSQL.');
+
+    // Tự động tạo dữ liệu mồi (Seed) nếu database trống
+    const { User } = db.models;
+    const userCount = await User.count();
+    if (userCount === 0) {
+      const bcrypt = require('bcryptjs');
+      const adminPass = await bcrypt.hash('admin123', 10);
+      await User.create({ username: 'admin', fullName: 'Super Admin', email: 'admin@library.com', password: adminPass, role: 'ADMIN' });
+      
+      const libPass = await bcrypt.hash('lib123456', 10);
+      await User.create({ username: 'librarian01', fullName: 'Thủ thư Mẫu', email: 'lib@library.com', password: libPass, role: 'LIBRARIAN' });
+      console.log('🌱 Đã tự động tạo dữ liệu tài khoản mẫu (Admin & Librarian).');
+    }
 
     app.listen(PORT, () => {
       console.log(`🚀 Server is running on http://localhost:${PORT}`);
