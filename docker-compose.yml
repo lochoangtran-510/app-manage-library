@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # 1. Database Service (Postgres)
+  db:
+    image: postgres:15-alpine
+    container_name: library_db_container
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-your_password}
+      POSTGRES_DB: ${DB_NAME:-library_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Backend Service (Node.js)
+  backend:
+    build: ./backend
+    container_name: library_backend_container
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-your_password}
+      - DB_NAME=${DB_NAME:-library_db}
+      - DB_PORT=5432
+      - PORT=5000
+      - NODE_ENV=production
+      - JWT_SECRET=super_secret_vibe_key_123456
+      - JWT_EXPIRE=30d
+    depends_on:
+      - db
+
+  # 3. Frontend Service (Vite React) - Dành cho Tester chạy Docker
+  frontend:
+    build: ./frontend
+    container_name: library_frontend_container
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
