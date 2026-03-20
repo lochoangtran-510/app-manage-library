@@ -2,7 +2,7 @@ const { Reader } = require('../models');
 
 // UC05 & UC06: Đăng ký thẻ (Bao gồm phát sinh số thẻ)
 exports.registerReader = async (req, res) => {
-  const { studentId, fullName, email, phoneNumber } = req.body;
+  const { studentId, fullName, email, phoneNumber, className, dateOfBirth, gender } = req.body;
 
   try {
     const cardId = 'LIB-' + Date.now().toString().slice(-8);
@@ -11,7 +11,7 @@ exports.registerReader = async (req, res) => {
     expiryDate.setFullYear(issueDate.getFullYear() + 1);
 
     const reader = await Reader.create({
-      studentId, fullName, email, phoneNumber, cardId, issueDate, expiryDate, status: 'ACTIVE'
+      studentId, fullName, email, phoneNumber, cardId, issueDate, expiryDate, status: 'ACTIVE', className, dateOfBirth, gender
     });
 
     res.status(201).json({ success: true, message: 'Đăng ký thẻ thành công!', data: reader });

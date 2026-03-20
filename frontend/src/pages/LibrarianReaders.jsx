@@ -17,6 +17,9 @@ const LibrarianReaders = () => {
   const [formData, setFormData] = useState({ 
     studentId: '', 
     fullName: '', 
+    className: '',
+    dateOfBirth: '',
+    gender: 'Nam',
     email: '', 
     phoneNumber: '' 
   });
@@ -65,6 +68,9 @@ const LibrarianReaders = () => {
     setFormData({ 
       studentId: reader.studentId, 
       fullName: reader.fullName, 
+      className: reader.className || '',
+      dateOfBirth: reader.dateOfBirth || '',
+      gender: reader.gender || 'Nam',
       email: reader.email || '', 
       phoneNumber: reader.phoneNumber || '' 
     });
@@ -93,7 +99,7 @@ const LibrarianReaders = () => {
   };
 
   const resetForm = () => {
-    setFormData({ studentId: '', fullName: '', email: '', phoneNumber: '' });
+    setFormData({ studentId: '', fullName: '', className: '', dateOfBirth: '', gender: 'Nam', email: '', phoneNumber: '' });
     setEditingId(null);
   };
 
@@ -145,6 +151,7 @@ const LibrarianReaders = () => {
           <thead className="bg-slate-50 border-b border-slate-100">
             <tr>
               <th className="px-6 py-4 font-bold text-slate-700">Độc giả (MSSV)</th>
+              <th className="px-6 py-4 font-bold text-slate-700">Lớp</th>
               <th className="px-6 py-4 font-bold text-slate-700">Mã thẻ</th>
               <th className="px-6 py-4 font-bold text-slate-700">Hạn thẻ</th>
               <th className="px-6 py-4 font-bold text-slate-700 text-right">Thao tác</th>
@@ -152,12 +159,15 @@ const LibrarianReaders = () => {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {loading ? (
-              <tr><td colSpan="4" className="px-6 py-20 text-center text-slate-400">Đang tải dữ liệu...</td></tr>
+              <tr><td colSpan="5" className="px-6 py-20 text-center text-slate-400">Đang tải dữ liệu...</td></tr>
             ) : filteredReaders.length > 0 ? filteredReaders.map(reader => (
               <tr key={reader.id} className="hover:bg-slate-50/50 transition-colors">
                 <td className="px-6 py-4">
                   <p className="font-semibold text-slate-800">{reader.fullName}</p>
                   <p className="text-xs text-slate-500">{reader.studentId}</p>
+                </td>
+                <td className="px-6 py-4 text-sm text-slate-600 font-medium">
+                  {reader.className}
                 </td>
                 <td className="px-6 py-4">
                   <span className="font-mono text-primary-600 font-bold bg-primary-50 px-2 py-1 rounded-lg">
@@ -192,7 +202,7 @@ const LibrarianReaders = () => {
                 </td>
               </tr>
             )) : (
-              <tr><td colSpan="4" className="px-6 py-20 text-center text-slate-400">Không tìm thấy độc giả nào.</td></tr>
+              <tr><td colSpan="5" className="px-6 py-20 text-center text-slate-400">Không tìm thấy độc giả nào.</td></tr>
             )}
           </tbody>
         </table>
@@ -223,14 +233,48 @@ const LibrarianReaders = () => {
               onChange={(e) => setFormData({...formData, fullName: e.target.value})}
             />
           </div>
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1">Email</label>
-            <input 
-              type="email"
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-100 transition-all outline-none"
-              value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Lớp / Chuyên ngành</label>
+              <input 
+                type="text" required placeholder="VD: CNTT K20"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-100 transition-all outline-none"
+                value={formData.className}
+                onChange={(e) => setFormData({...formData, className: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Ngày sinh</label>
+              <input 
+                type="date" required
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-100 transition-all outline-none"
+                value={formData.dateOfBirth}
+                onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Giới tính</label>
+              <select 
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-100 transition-all outline-none"
+                value={formData.gender}
+                onChange={(e) => setFormData({...formData, gender: e.target.value})}
+              >
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">Email</label>
+              <input 
+                type="email"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-100 transition-all outline-none"
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+              />
+            </div>
           </div>
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-1">Số điện thoại</label>

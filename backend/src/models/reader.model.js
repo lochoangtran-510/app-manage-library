@@ -20,6 +20,18 @@ const Reader = sequelize.define('Reader', {
     type: DataTypes.STRING,
     validate: { isEmail: true },
   },
+  className: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  dateOfBirth: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+  },
+  gender: {
+    type: DataTypes.ENUM('Nam', 'Nữ', 'Khác'),
+    defaultValue: 'Nam',
+  },
   phoneNumber: {
     type: DataTypes.STRING,
   },
