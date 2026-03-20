@@ -77,7 +77,7 @@ const BookDetail = () => {
               </p>
            </div>
 
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
               <div className="bg-white p-5 rounded-2xl border border-slate-100">
                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Mã ISBN</p>
                  <p className="font-bold text-slate-700 flex items-center gap-2"><Hash size={14}/> {book.isbn}</p>
@@ -93,6 +93,14 @@ const BookDetail = () => {
               <div className="bg-white p-5 rounded-2xl border border-slate-100">
                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tổng cộng</p>
                  <p className="font-bold text-slate-700 flex items-center gap-2"><Info size={14}/> {book.copies?.length} Cuốn</p>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-slate-100">
+                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Số trang</p>
+                 <p className="font-bold text-slate-700 flex items-center gap-2"><Info size={14}/> {book.pageCount || 'Đang cập nhật'}</p>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-slate-100">
+                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Kích thước</p>
+                 <p className="font-bold text-slate-700 flex items-center gap-2"><BookIcon size={14}/> {book.bookSize || 'Đang cập nhật'}</p>
               </div>
            </div>
 
@@ -111,7 +119,8 @@ const BookDetail = () => {
                       <div>
                         <p className="font-bold text-slate-800 font-mono italic">Barcode: {copy.barcode}</p>
                         <p className="text-xs text-slate-500 flex items-center gap-1 mt-1">
-                          <MapPin size={12} /> {copy.location || 'Vị trí: Khu A-01'}
+                          <MapPin size={12} /> {copy.location} &nbsp; | &nbsp; 
+                          <Calendar size={12} /> Nhập ngày: {new Date(copy.importDate || copy.createdAt).toLocaleDateString('vi-VN')}
                         </p>
                       </div>
                     </div>

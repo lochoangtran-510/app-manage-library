@@ -18,7 +18,7 @@ const LibrarianBooks = () => {
 
   // Form states
   const [bookFormData, setBookFormData] = useState({
-    title: '', author: '', isbn: '', publisher: '', publishYear: '', categoryId: '', initialCopies: 1
+    title: '', author: '', isbn: '', publisher: '', publishYear: '', categoryId: '', pageCount: '', bookSize: '', initialCopies: 1
   });
   const [catFormData, setCatFormData] = useState({ name: '', description: '' });
 
@@ -110,7 +110,7 @@ const LibrarianBooks = () => {
   };
 
   const resetForms = () => {
-    setBookFormData({ title: '', author: '', isbn: '', publisher: '', publishYear: '', categoryId: '', initialCopies: 1 });
+    setBookFormData({ title: '', author: '', isbn: '', publisher: '', publishYear: '', categoryId: '', pageCount: '', bookSize: '', initialCopies: 1 });
     setCatFormData({ name: '', description: '' });
     setEditingId(null);
   };
@@ -277,7 +277,7 @@ const LibrarianBooks = () => {
               <input type="text" required className="modal-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl" value={bookFormData.author} onChange={e => setBookFormData({...bookFormData, author: e.target.value})}/>
             </div>
             <div>
-              <label className="text-sm font-bold text-slate-700 mb-1 flex items-center gap-1"><Hash size={14}/> ISBN</label>
+              <label className="text-sm font-bold text-slate-700 mb-1 flex items-center gap-1"><Hash size={14}/> Mã đầu sách (ISBN)</label>
               <input type="text" className="modal-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl" value={bookFormData.isbn} onChange={e => setBookFormData({...bookFormData, isbn: e.target.value})}/>
             </div>
             <div className="md:col-span-2">
@@ -299,6 +299,14 @@ const LibrarianBooks = () => {
             <div>
               <label className="text-sm font-bold text-slate-700 mb-1">Năm xuất bản</label>
               <input type="number" className="modal-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl" value={bookFormData.publishYear} onChange={e => setBookFormData({...bookFormData, publishYear: e.target.value})}/>
+            </div>
+            <div>
+              <label className="text-sm font-bold text-slate-700 mb-1">Số trang</label>
+              <input type="number" className="modal-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl" value={bookFormData.pageCount} onChange={e => setBookFormData({...bookFormData, pageCount: e.target.value})}/>
+            </div>
+            <div>
+              <label className="text-sm font-bold text-slate-700 mb-1">Kích thước</label>
+              <input type="text" placeholder="VD: 13x19 cm" className="modal-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl" value={bookFormData.bookSize} onChange={e => setBookFormData({...bookFormData, bookSize: e.target.value})}/>
             </div>
             
             {/* UC10: Input số lượng bản sao (Chỉ khi thêm mới) */}

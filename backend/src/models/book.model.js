@@ -24,6 +24,12 @@ const Book = sequelize.define('Book', {
   },
   publishYear: {
     type: DataTypes.INTEGER,
+  },
+  pageCount: {
+    type: DataTypes.INTEGER,
+  },
+  bookSize: {
+    type: DataTypes.STRING,
   }
 }, {
   timestamps: true,

@@ -2,11 +2,11 @@ const { Book, BookCopy, Category, sequelize } = require('../models');
 
 // UC09 & UC10: Nhập đầu sách mới và ít nhất 1 bản sao
 exports.createBook = async (req, res) => {
-  const { title, author, isbn, publisher, publishYear, categoryId, initialCopies = 1 } = req.body;
+  const { title, author, isbn, publisher, publishYear, categoryId, pageCount, bookSize, initialCopies = 1 } = req.body;
   const transaction = await sequelize.transaction();
   try {
     const book = await Book.create({
-      title, author, isbn, publisher, publishYear, categoryId
+      title, author, isbn, publisher, publishYear, categoryId, pageCount, bookSize
     }, { transaction });
 
     const copies = [];

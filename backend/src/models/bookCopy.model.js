@@ -18,6 +18,10 @@ const BookCopy = sequelize.define('BookCopy', {
   },
   location: {
     type: DataTypes.STRING,
+  },
+  importDate: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
   }
 }, {
   timestamps: true,
