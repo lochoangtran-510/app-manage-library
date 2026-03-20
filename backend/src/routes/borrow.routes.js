@@ -4,7 +4,7 @@ const { createBorrowing, getBorrowRecords, getActiveBorrowingsByReader, returnBo
 const { protect, authorize } = require('../middlewares/auth.middleware');
 
 router.use(protect);
-router.use(authorize('LIBRARIAN', 'ADMIN'));
+router.use(authorize('LIBRARIAN'));
 
 router.get('/', getBorrowRecords);
 router.get('/active/:cardId', getActiveBorrowingsByReader);

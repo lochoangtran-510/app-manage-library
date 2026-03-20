@@ -8,7 +8,7 @@ router.get('/copy-check/:barcode', protect, checkBookCopy);
 router.get('/:id', getOneBook);
 
 router.use(protect);
-router.use(authorize('LIBRARIAN', 'ADMIN'));
+router.use(authorize('LIBRARIAN'));
 
 router.post('/', createBook);
 router.put('/:id', updateBook);

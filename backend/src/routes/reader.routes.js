@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { registerReader, updateReader, deleteReader, getAllReaders, checkReaderCard } = require('../controllers/reader.controller');
-const { protect } = require('../middlewares/auth.middleware');
+const { protect, authorize } = require('../middlewares/auth.middleware');
 
 router.use(protect);
+router.use(authorize('LIBRARIAN'));
 
 router.get('/check/:cardId', checkReaderCard);
 

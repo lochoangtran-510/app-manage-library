@@ -4,7 +4,7 @@ const { getTopBooks, getOverdueReaders } = require('../controllers/report.contro
 const { protect, authorize } = require('../middlewares/auth.middleware');
 
 router.use(protect);
-router.use(authorize('LIBRARIAN', 'ADMIN'));
+router.use(authorize('LIBRARIAN'));
 
 router.get('/top-books', getTopBooks);
 router.get('/overdue', getOverdueReaders);

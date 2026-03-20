@@ -7,10 +7,10 @@ router.use(protect); // Tất cả các UC mượn/trả cần đăng nhập
 
 router.route('/')
   .get(getCategories)
-  .post(authorize('LIBRARIAN', 'ADMIN'), createCategory);
+  .post(authorize('LIBRARIAN'), createCategory);
 
 router.route('/:id')
-  .put(authorize('LIBRARIAN', 'ADMIN'), updateCategory)
-  .delete(authorize('LIBRARIAN', 'ADMIN'), deleteCategory);
+  .put(authorize('LIBRARIAN'), updateCategory)
+  .delete(authorize('LIBRARIAN'), deleteCategory);
 
 module.exports = router;

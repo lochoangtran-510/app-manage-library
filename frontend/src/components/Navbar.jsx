@@ -59,7 +59,7 @@ const Navbar = () => {
               )}
               
               {/* Dropdown Nghiệp vụ */}
-              {(auth.user.role === 'LIBRARIAN' || auth.user.role === 'ADMIN') && (
+              {auth.user.role === 'LIBRARIAN' && (
                 <div className="relative group">
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -124,10 +124,14 @@ const Navbar = () => {
           {auth.token ? (
             <>
               {auth.user.role === 'ADMIN' && <Link to="/admin/librarians" className="text-lg font-bold py-3 border-b border-slate-50 font-outfit" onClick={() => setIsOpen(false)}>👮 Quản lý Thủ thư</Link>}
-              <Link to="/librarian/books" className="text-lg font-bold py-3 border-b border-slate-50 font-outfit" onClick={() => setIsOpen(false)}>📚 Quản lý Kho sách</Link>
-              <Link to="/librarian/readers" className="text-lg font-bold py-3 border-b border-slate-50 font-outfit" onClick={() => setIsOpen(false)}>👥 Quản lý Độc giả</Link>
-              <Link to="/librarian/borrow-return" className="text-lg font-black py-3 border-b border-slate-50 text-primary-600 font-outfit" onClick={() => setIsOpen(false)}>🔄 Mượn & Trả sách</Link>
-              <Link to="/librarian/reports" className="text-lg font-bold py-3 border-b border-slate-50 font-outfit" onClick={() => setIsOpen(false)}>📊 Thống kê</Link>
+              {auth.user.role === 'LIBRARIAN' && (
+                <>
+                  <Link to="/librarian/books" className="text-lg font-bold py-3 border-b border-slate-50 font-outfit" onClick={() => setIsOpen(false)}>📚 Quản lý Kho sách</Link>
+                  <Link to="/librarian/readers" className="text-lg font-bold py-3 border-b border-slate-50 font-outfit" onClick={() => setIsOpen(false)}>👥 Quản lý Độc giả</Link>
+                  <Link to="/librarian/borrow-return" className="text-lg font-black py-3 border-b border-slate-50 text-primary-600 font-outfit" onClick={() => setIsOpen(false)}>🔄 Mượn & Trả sách</Link>
+                  <Link to="/librarian/reports" className="text-lg font-bold py-3 border-b border-slate-50 font-outfit" onClick={() => setIsOpen(false)}>📊 Thống kê</Link>
+                </>
+              )}
               <button onClick={handleLogout} className="flex items-center gap-2 text-red-500 font-bold py-6 text-lg">
                 <LogOut size={20} /> Đăng xuất ({auth.user.fullName})
               </button>

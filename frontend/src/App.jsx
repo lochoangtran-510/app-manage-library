@@ -31,7 +31,7 @@ function App() {
             </Route>
 
             {/* Librarian cụm */}
-            <Route element={<RoleRoute allowedRoles={['LIBRARIAN', 'ADMIN']} />}>
+            <Route element={<RoleRoute allowedRoles={['LIBRARIAN']} />}>
               <Route path="/librarian/books" element={<LibrarianBooks />} />
               <Route path="/librarian/readers" element={<LibrarianReaders />} />
               <Route path="/librarian/borrow-return" element={<LibrarianBorrow />} />
