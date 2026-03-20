@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Plus, Edit, Trash2, Search, CreditCard, Printer, UserCircle } from 'lucide-react';
+import { User, Users, Search, Plus, Edit, Trash2, Calendar, MapPin, Tag } from 'lucide-react';
+import API_BASE_URL from '../api/config';
 import Modal from '../components/Modal';
 
 const LibrarianReaders = () => {
@@ -34,7 +35,7 @@ const LibrarianReaders = () => {
 
   const fetchReaders = async () => {
     try {
-      const resp = await axios.get('http://localhost:5000/api/readers', axiosConfig);
+      const resp = await axios.get(`${API_BASE_URL}/readers`, axiosConfig);
       setReaders(resp.data.data);
     } catch (err) {
       toast.error('Lỗi lấy danh sách độc giả!');
@@ -47,12 +48,11 @@ const LibrarianReaders = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        // UC07: Sửa
-        await axios.put(`http://localhost:5000/api/readers/${editingId}`, formData, axiosConfig);
+        await axios.put(`${API_BASE_URL}/readers/${editingId}`, formData, axiosConfig);
         toast.success('Đã cập nhật thông tin độc giả!');
       } else {
         // UC05: Đăng ký thẻ
-        await axios.post('http://localhost:5000/api/readers', formData, axiosConfig);
+        await axios.post(`${API_BASE_URL}/readers`, formData, axiosConfig);
         toast.success('Đăng ký thẻ thành công!');
       }
       setIsModalOpen(false);
@@ -80,7 +80,7 @@ const LibrarianReaders = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa thẻ độc giả này không?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/readers/${id}`, axiosConfig);
+        await axios.delete(`${API_BASE_URL}/readers/${id}`, axiosConfig);
         toast.success('Đã xóa thành công!');
         fetchReaders();
       } catch (err) {

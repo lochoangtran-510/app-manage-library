@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Plus, Edit, Trash2, Search, UserCheck } from 'lucide-react';
 import Modal from '../components/Modal';
+import API_BASE_URL from '../api/config';
 
 const AdminLibrarians = () => {
   const [librarians, setLibrarians] = useState([]);
@@ -29,7 +30,7 @@ const AdminLibrarians = () => {
 
   const fetchLibrarians = async () => {
     try {
-      const resp = await axios.get('http://localhost:5000/api/users', axiosConfig);
+      const resp = await axios.get(`${API_BASE_URL}/users`, axiosConfig);
       setLibrarians(resp.data.data);
     } catch (err) {
       toast.error('Lỗi lấy danh sách thủ thư!');
@@ -43,11 +44,11 @@ const AdminLibrarians = () => {
     try {
       if (editingId) {
         // UC03: Sửa
-        await axios.put(`http://localhost:5000/api/users/${editingId}`, formData, axiosConfig);
+        await axios.put(`${API_BASE_URL}/users/${editingId}`, formData, axiosConfig);
         toast.success('Đã cập nhật thông tin thủ thư!');
       } else {
         // UC02: Thêm mới
-        await axios.post('http://localhost:5000/api/users', formData, axiosConfig);
+        await axios.post(`${API_BASE_URL}/users`, formData, axiosConfig);
         toast.success('Đã tạo thành công tài khoản thủ thư!');
       }
       setIsModalOpen(false);
@@ -72,7 +73,7 @@ const AdminLibrarians = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa thủ thư này không?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/users/${id}`, axiosConfig);
+        await axios.delete(`${API_BASE_URL}/users/${id}`, axiosConfig);
         toast.success('Đã xóa thành công!');
         fetchLibrarians();
       } catch (err) {

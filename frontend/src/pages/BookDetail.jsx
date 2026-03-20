@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ChevronLeft, Book as BookIcon, MapPin, Hash, Building, Calendar, Info, CheckCircle, XCircle } from 'lucide-react';
+import API_BASE_URL from '../api/config';
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -15,7 +16,7 @@ const BookDetail = () => {
 
   const fetchBookDetail = async () => {
     try {
-      const resp = await axios.get(`http://localhost:5000/api/books/${id}`);
+      const resp = await axios.get(`${API_BASE_URL}/books/${id}`);
       setBook(resp.data.data);
     } catch (err) {
       console.error('Lỗi lấy chi tiết sách:', err);

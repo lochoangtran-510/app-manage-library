@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Search, User, Book as BookIcon, Plus, CheckCircle2, AlertCircle, Trash2, Calendar, CornerUpLeft, BookOpen, Clock, ScanBarcode } from 'lucide-react';
+import API_BASE_URL from '../api/config';
 
 const LibrarianBorrow = () => {
   const [activeTab, setActiveTab] = useState('borrow'); // 'borrow' or 'return'
@@ -31,7 +32,7 @@ const LibrarianBorrow = () => {
 
   const handleSearchSuggestions = async () => {
     try {
-      const resp = await axios.get(`http://localhost:5000/api/books?search=${barcodeOrTitle}`, axiosConfig);
+      const resp = await axios.get(`${API_BASE_URL}/books?search=${barcodeOrTitle}`, axiosConfig);
       // Chỉ lấy các bản sao có sẵn (AVAILABLE)
       const availableCopies = [];
       resp.data.data.forEach(book => {
@@ -55,7 +56,7 @@ const LibrarianBorrow = () => {
   const checkReader = async () => {
     if (!cardId) return;
     try {
-      const resp = await axios.get(`http://localhost:5000/api/readers/check/${cardId}`, axiosConfig);
+      const resp = await axios.get(`${API_BASE_URL}/readers/check/${cardId}`, axiosConfig);
       if (resp.data.isExpired) { toast.error('Thẻ hết hạn!'); setReader(null); }
       else { setReader(resp.data.data); }
     } catch (err) { setReader(null); toast.error('Không tìm thấy thẻ!'); }
@@ -73,7 +74,7 @@ const LibrarianBorrow = () => {
   const checkAndAddByBarcode = async () => {
     if (!barcodeOrTitle) return;
     try {
-      const resp = await axios.get(`http://localhost:5000/api/books/copy-check/${barcodeOrTitle}`, axiosConfig);
+      const resp = await axios.get(`${API_BASE_URL}/books/copy-check/${barcodeOrTitle}`, axiosConfig);
       const copy = resp.data.data;
       if (copy.status !== 'AVAILABLE') toast.error('Sách không sẵn sàng!');
       else {
@@ -85,7 +86,7 @@ const LibrarianBorrow = () => {
   const finalizeBorrowing = async () => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/borrow', { readerId: reader.id, copyIds: borrowList.map(i => i.id), dueDate }, axiosConfig);
+      await axios.post(`${API_BASE_URL}/borrow`, { readerId: reader.id, copyIds: borrowList.map(i => i.id), dueDate }, axiosConfig);
       toast.success('Mượn sách thành công!');
       setReader(null); setCardId(''); setBorrowList([]);
     } catch (err) { 
@@ -103,7 +104,7 @@ const LibrarianBorrow = () => {
   const searchBorrowings = async () => {
     if (!returnCardId) return;
     try {
-      const resp = await axios.get(`http://localhost:5000/api/borrow/active/${returnCardId}`, axiosConfig);
+      const resp = await axios.get(`${API_BASE_URL}/borrow/active/${returnCardId}`, axiosConfig);
       setReturnReader(resp.data.reader);
       setActiveBorrowings(resp.data.data);
       if (resp.data.data.length === 0) toast.info('Độc giả này không có sách đang mượn.');
@@ -114,7 +115,7 @@ const LibrarianBorrow = () => {
 
   const handleReturn = async (id, condition) => {
     try {
-      await axios.put(`http://localhost:5000/api/borrow/return/${id}`, { condition }, axiosConfig);
+      await axios.put(`${API_BASE_URL}/borrow/return/${id}`, { condition }, axiosConfig);
       toast.success('Đã ghi nhận trả sách!');
       searchBorrowings(); 
     } catch (err) {

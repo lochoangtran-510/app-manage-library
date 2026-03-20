@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Search, Book as BookIcon, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../api/config';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -9,19 +10,18 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const resp = await axios.get(`${API_BASE_URL}/books`);
+        setBooks(resp.data.data);
+      } catch (err) {
+        console.error('Lỗi khi tải sách:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchBooks();
   }, []);
-
-  const fetchBooks = async () => {
-    try {
-      const resp = await axios.get('http://localhost:5000/api/books');
-      setBooks(resp.data.data);
-    } catch (err) {
-      console.error('Lỗi lấy sách:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const filteredBooks = books.filter(b => 
     b.title.toLowerCase().includes(searchTerm.toLowerCase()) || 

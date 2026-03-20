@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
 import { TrendingUp, AlertTriangle, User, Book as BookIcon, Clock } from 'lucide-react';
+import API_BASE_URL from '../api/config';
 
 const LibrarianReports = () => {
   const [topBooks, setTopBooks] = useState([]);
@@ -17,8 +18,8 @@ const LibrarianReports = () => {
   const fetchStats = async () => {
     try {
       const [topResp, overdueResp] = await Promise.all([
-        axios.get('http://localhost:5000/api/reports/top-books', axiosConfig),
-        axios.get('http://localhost:5000/api/reports/overdue', axiosConfig)
+        axios.get(`${API_BASE_URL}/reports/top-books`, axiosConfig),
+        axios.get(`${API_BASE_URL}/reports/overdue`, axiosConfig)
       ]);
       setTopBooks(topResp.data.data);
       setOverdueReaders(overdueResp.data.data);

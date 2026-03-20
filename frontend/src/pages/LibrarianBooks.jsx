@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Plus, Edit, Trash2, Search, Book, Layers, Tag as TagIcon, Hash, User } from 'lucide-react';
 import Modal from '../components/Modal';
+import API_BASE_URL from '../api/config';
 
 const LibrarianBooks = () => {
   const [activeTab, setActiveTab] = useState('books'); // 'books' or 'categories'
@@ -34,8 +35,8 @@ const LibrarianBooks = () => {
     setLoading(true);
     try {
       const [bookResp, catResp] = await Promise.all([
-        axios.get('http://localhost:5000/api/books', axiosConfig),
-        axios.get('http://localhost:5000/api/categories', axiosConfig)
+        axios.get(`${API_BASE_URL}/books`, axiosConfig),
+        axios.get(`${API_BASE_URL}/categories`, axiosConfig)
       ]);
       setBooks(bookResp.data.data);
       setCategories(catResp.data.data);
@@ -51,10 +52,10 @@ const LibrarianBooks = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/categories/${editingId}`, catFormData, axiosConfig);
+        await axios.put(`${API_BASE_URL}/categories/${editingId}`, catFormData, axiosConfig);
         toast.success('Đã cập nhật chuyên ngành!');
       } else {
-        await axios.post('http://localhost:5000/api/categories', catFormData, axiosConfig);
+        await axios.post(`${API_BASE_URL}/categories`, catFormData, axiosConfig);
         toast.success('Đã thêm chuyên ngành mới!');
       }
       setIsCatModalOpen(false);
@@ -68,7 +69,7 @@ const LibrarianBooks = () => {
   const deleteCategory = async (id) => {
     if (window.confirm('Sau khi xóa, các sách thuộc chuyên ngành này sẽ bị ảnh hưởng. Bạn có muốn tiếp tục?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/categories/${id}`, axiosConfig);
+        await axios.delete(`${API_BASE_URL}/categories/${id}`, axiosConfig);
         toast.success('Đã xóa chuyên ngành!');
         fetchData();
       } catch (err) {
@@ -82,11 +83,11 @@ const LibrarianBooks = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/books/${editingId}`, bookFormData, axiosConfig);
+        await axios.put(`${API_BASE_URL}/books/${editingId}`, bookFormData, axiosConfig);
         toast.success('Đã cập nhật đầu sách!');
       } else {
         // UC09 & UC10: Bao gồm initialCopies
-        await axios.post('http://localhost:5000/api/books', bookFormData, axiosConfig);
+        await axios.post(`${API_BASE_URL}/books`, bookFormData, axiosConfig);
         toast.success('Đã nhập kho đầu sách và các bản sao thành công!');
       }
       setIsBookModalOpen(false);
@@ -100,7 +101,7 @@ const LibrarianBooks = () => {
   const deleteBook = async (id) => {
     if (window.confirm('Mọi thông tin mượn trả liên quan đến đầu sách này sẽ bị ảnh hưởng. Bạn có chắc không?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/books/${id}`, axiosConfig);
+        await axios.delete(`${API_BASE_URL}/books/${id}`, axiosConfig);
         toast.success('Đã xóa đầu sách và bản sao!');
         fetchData();
       } catch (err) {

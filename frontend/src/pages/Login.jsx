@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Library, Lock, User } from 'lucide-react';
+import { LogIn, User, Lock, AlertCircle } from 'lucide-react';
+import API_BASE_URL from '../api/config';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -34,7 +35,7 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
         username,
         password
       });
