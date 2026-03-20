@@ -2,13 +2,13 @@
 
 Chào mừng bạn đến với **VibeLib**! Đây là một dự án ứng dụng mô hình **"Vibe Coding"** - phong cách lập trình kết hợp sức mạnh của trí tuệ nhân tạo (AI) để phát triển một hệ thống Full-Stack (Frontend, Backend, Database) từ con số 0 đến khi hoàn thiện.
 
-Dự án này được thiết kế theo đúng quy chuẩn mô hình Thư viện hiện đại, bao gồm các phân hệ: Admin, Thủ thư (Librarian) và Độc giả (Reader/Student).
+Dự án được thiết kế theo đúng quy chuẩn mô hình Thư viện hiện đại, bao gồm các phân hệ: **Admin**, **Thủ thư (Librarian)** và **Độc giả (Reader/Student)**.
 
 ---
 
 ## 🚀 Công nghệ sử dụng
-- **Frontend**: React.js (Vite), Tailwind CSS, Recharts, Lucide Icons.
-- **Backend**: Node.js, Express.js, Sequelize (ORM), JSON Web Token (JWT).
+- **Frontend**: React.js (Vite), Tailwind CSS, Lucide Icons.
+- **Backend**: Node.js, Express.js, Sequelize ORM, JWT Authentication.
 - **Database**: PostgreSQL.
 - **Triển khai**: Docker & Docker Compose.
 
@@ -16,52 +16,86 @@ Dự án này được thiết kế theo đúng quy chuẩn mô hình Thư việ
 
 ## 🛠️ Hướng dẫn cài đặt & Chạy dự án (Dành cho Tester)
 
-Mọi thứ đã được đóng gói sẵn trong Docker nên việc cài đặt cực kỳ đơn giản. Đảm bảo máy tính của bạn đã cài đặt **[Docker Desktop](https://www.docker.com/products/docker-desktop)**.
+Toàn bộ hệ thống đã được đóng gói sẵn trong Docker. Hãy đảm bảo máy tính của bạn đã cài **[Docker Desktop](https://www.docker.com/products/docker-desktop)**.
 
 **Bước 1:** Clone mã nguồn về máy:
 ```bash
-git clone <địa_chỉ_repo_github_của_bạn>
-cd vibe-coding2
+git clone https://github.com/lochoangtran-510/app-manage-library.git
+cd app-manage-library
 ```
 
-**Bước 2:** Chạy toàn bộ hệ thống bằng Docker Compose:
+**Bước 2:** Chạy toàn bộ hệ thống chỉ bằng một lệnh duy nhất:
 ```bash
 docker-compose up --build -d
 ```
-*(Hệ thống sẽ tự động cài đặt Database Postgres, cấu hình Backend và khởi chạy Frontend. Cứ pha một tách cà phê và chờ khoảng 1-2 phút nhé!)*
+*(Hệ thống tự động cài đặt PostgreSQL, Backend và Frontend. Chờ khoảng 1-2 phút.)*
 
-**Bước 3:** Truy cập ứng dụng:
-- Giao diện web đã sẵn sàng tại: `http://localhost:5173`
-- Backend API chạy ngầm tại: `http://localhost:5000`
-
----
-
-## 🔐 Tài khoản Test (Tài khoản mồi)
-
-Khi hệ thống khởi chạy lần đầu tiên qua Docker, một Super Admin và một Thủ thư mẫu đã được tạo tự động để bạn có thể vào test ngay lập tức các nghiệp vụ:
-
-### 1. Tài khoản Super Admin
-- **Tên đăng nhập:** `admin`
-- **Mật khẩu:** `admin123`
-- *Quyền hạn:* Có thể thêm/xóa/Sửa các tài khoản "Thủ thư", xem báo cáo thống kê chuyên sâu.
-
-### 2. Tài khoản Thủ thư (Librarian)
-- **Tên đăng nhập:** `librarian01`
-- **Mật khẩu:** `lib123456`
-- *Quyền hạn:* 
-  - Quản lý phân mục chuyên ngành và danh sách các quyển sách vật lý.
-  - Quản lý Độc giả (sinh viên) và có thể "In thẻ" xịn xò.
-  - Xử lý mượn/trả sách bằng mã Thẻ Độc Giả và Mã vạch (Barcode).
-  - Kiểm tra thống kê danh sách độc giả quá hạn.
+**Bước 3:** Mở trình duyệt và truy cập:
+- 🌐 Giao diện người dùng: `http://localhost:5173`
+- ⚙️ Backend API: `http://localhost:5000`
 
 ---
 
-## 💡 Hướng dẫn luồng Nhiệp vụ cơ bản (Test Flow)
-1. **Dành cho Sinh viên (Không đăng nhập)**: Tra cứu tên sách trên thanh tìm kiếm xem sách còn trên kệ không. Rút sách ra mang đến quầy.
-2. **Dành cho Thủ thư (Đã đăng nhập)**: 
-   - Đăng kí thẻ cho sinh viên (nếu chưa có).
-   - Vào menu `Nghiệp vụ` -> `Mượn & Trả sách`.
-   - Nhập mã thẻ sinh viên báo (VD: `LIB-12345678`), tiếp tục gõ tên sách hoặc quét barcode để chọn quyển sách khớp.
-   - Bấm **Hoàn tất**! Hệ thống sẽ xử lý trừ sách trong kho.
+## 🌱 Tài khoản mẫu (Tự động được tạo)
+
+> **Không cần tạo tài khoản thủ công!** Dự án đã tích hợp cơ chế **Auto-Seeding** ngay trong Backend (`server.js`). Mỗi khi hệ thống khởi động lần đầu với Database trống, hai tài khoản mẫu sau đây sẽ được tạo **hoàn toàn tự động**:
+
+### 👑 Tài khoản Admin
+| Trường | Giá trị |
+|--------|---------|
+| Tên đăng nhập | `admin` |
+| Mật khẩu | `admin123` |
+| Quyền hạn | Quản lý tài khoản Thủ thư (thêm / sửa / xóa / vô hiệu hóa) |
+
+> ⚠️ **Lưu ý:** Admin **không có** quyền truy cập các nghiệp vụ thư viện (sách, mượn/trả). Đây là hành vi được thiết kế theo đúng đặc tả phân quyền.
+
+### 📚 Tài khoản Thủ thư
+| Trường | Giá trị |
+|--------|---------|
+| Tên đăng nhập | `librarian01` |
+| Mật khẩu | `lib123456` |
+| Quyền hạn | Toàn quyền nghiệp vụ thư viện |
+
+Thủ thư có thể:
+- Quản lý **Chuyên ngành**, **Đầu sách** và **Bản sao vật lý**.
+- Quản lý **Thẻ Độc giả** (sinh viên) và in thẻ.
+- Xử lý **Mượn & Trả sách** bằng mã thẻ và barcode.
+- Xem **Báo cáo thống kê**: Sách được mượn nhiều nhất, Độc giả quá hạn.
+
+---
+
+## 💡 Luồng kiểm thử cơ bản (Test Flow)
+
+### Luồng 1: Sinh viên tra cứu sách (Không cần đăng nhập)
+1. Truy cập `http://localhost:5173`.
+2. Dùng thanh tìm kiếm để tra tên sách, tác giả.
+3. Bấm vào sách để xem chi tiết và tình trạng từng bản sao (Sẵn sàng / Đang mượn).
+
+### Luồng 2: Thủ thư làm nghiệp vụ Mượn sách
+1. Đăng nhập bằng tài khoản `librarian01`.
+2. Vào **Nghiệp vụ** → **Quản lý Kho sách** → Thêm **Chuyên ngành** mới (VD: `CNTT`).
+3. Thêm một **Đầu sách** mới vào kho (điền số lượng bản sao khi tạo).
+4. Vào **Quản lý Độc giả** → Đăng ký thẻ cho một sinh viên mới. Ghi lại **Mã thẻ** được cấp (VD: `LIB-12345678`).
+5. Vào **Mượn & Trả sách** → Nhập Mã thẻ → Tìm sách → Bấm **Hoàn tất Phiếu mượn**.
+
+### Luồng 3: Thủ thư ghi nhận Trả sách
+1. Vào **Mượn & Trả sách** → Chuyển sang tab **Trả sách**.
+2. Nhập Mã thẻ của độc giả đang mượn sách.
+3. Chọn tình trạng sách khi nhận lại → Bấm **Xác nhận trả**.
+
+---
+
+## 🔄 Lưu ý khi Reset / Cài lại (Quan trọng!)
+
+Nếu bạn muốn **xóa sạch dữ liệu và bắt đầu lại từ đầu** (hoặc sau khi pull code mới có thay đổi cấu trúc Database), hãy chạy:
+
+```bash
+docker-compose down -v
+docker-compose up --build -d
+```
+
+> Lệnh `-v` sẽ xóa cả **ổ cứng ảo** (Docker Volume) chứa dữ liệu PostgreSQL. Sau khi khởi động lại, tài khoản mẫu sẽ được **tự động tạo lại** nhờ cơ chế Auto-Seeding.
+
+---
 
 *(Chúc bạn có những trải nghiệm thật "Vibe" với đồ án này!)* 🎉
