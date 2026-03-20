@@ -22,11 +22,11 @@ const Reader = sequelize.define('Reader', {
   },
   className: {
     type: DataTypes.STRING,
-    allowNull: false,
+    defaultValue: 'Chưa cập nhật',
   },
   dateOfBirth: {
     type: DataTypes.DATEONLY,
-    allowNull: false,
+    defaultValue: '2000-01-01',
   },
   gender: {
     type: DataTypes.ENUM('Nam', 'Nữ', 'Khác'),
