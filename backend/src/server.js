@@ -42,8 +42,8 @@ const startServer = async () => {
     // Kết nối Database
     await connectDB();
     
-    // Sync models
-    await db.sequelize.sync({ alter: true });
+    // Sync models - chỉ tạo bảng mới nếu chưa tồn tại, giữ nguyên bảng cũ
+    await db.sequelize.sync({ force: false });
     console.log('✅ All tables synchronized in PostgreSQL.');
 
     // Tự động tạo dữ liệu mồi (Seed) nếu database trống

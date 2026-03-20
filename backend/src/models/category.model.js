@@ -10,7 +10,6 @@ const Category = sequelize.define('Category', {
   categoryCode: {
     type: DataTypes.STRING,
     defaultValue: 'GENERAL',
-    unique: true,
   },
   name: {
     type: DataTypes.STRING,
