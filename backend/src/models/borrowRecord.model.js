@@ -7,6 +7,10 @@ const BorrowRecord = sequelize.define('BorrowRecord', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
+  librarianId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
   borrowDate: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

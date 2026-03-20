@@ -4,8 +4,28 @@ const { Op } = require('sequelize');
 // UC14-UC16: Ghi nhận phiếu mượn (Bulk)
 exports.createBorrowing = async (req, res) => {
   const { readerId, copyIds, dueDate } = req.body;
+  const librarianId = req.user.id; // Lấy mã thủ thư đang đăng nhập
+  
+  if (!copyIds || copyIds.length === 0) {
+    return res.status(400).json({ success: false, message: 'Vui lòng chọn sách để mượn!' });
+  }
+
+  // 1. Kiểm tra quy định: Một lần mượn chỉ được mượn đúng 1 cuốn sách
+  if (copyIds.length > 1) {
+    return res.status(400).json({ success: false, message: 'Quy định thư viện: Mỗi độc giả chỉ được mượn TỐI ĐA 1 CUỐN SÁCH trong một lần mượn!' });
+  }
+
   const transaction = await sequelize.transaction();
   try {
+    // 2. Kiểm tra xem độc giả này có đang giữ cuốn sách nào chưa trả không
+    const activeBorrowStats = await BorrowRecord.count({
+      where: { readerId, status: 'BORROWING' },
+      transaction
+    });
+    if (activeBorrowStats > 0) {
+      throw new Error('Độc giả này đang mượn 1 cuốn sách chưa trả. Phải trả sách cũ mới được mượn tiếp!');
+    }
+
     // Kiểm tra ngày trả không được ở quá khứ
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -21,7 +41,8 @@ exports.createBorrowing = async (req, res) => {
       
       await BorrowRecord.create({
         readerId, 
-        bookCopyId: copyId, 
+        bookCopyId: copyId,
+        librarianId, // Thêm thông tin mã thủ thư
         borrowDate: new Date(),
         dueDate: selectedDueDate,
         status: 'BORROWING'

@@ -63,6 +63,8 @@ const LibrarianBorrow = () => {
 
   const addCopyToList = (copy) => {
     if (borrowList.some(i => i.id === copy.copyId)) return toast.warning('Sách đã có trong danh sách!');
+    if (borrowList.length >= 1) return toast.warning('Quy định: Chỉ được mượn TỐI ĐA 1 sách mỗi lần mượn!');
+    
     setBorrowList([...borrowList, { id: copy.copyId, barcode: copy.barcode, title: copy.title }]);
     setBarcodeOrTitle('');
     setSuggestions([]);
