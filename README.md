@@ -34,7 +34,6 @@ docker-compose up --build -d
 - 🌐 Giao diện người dùng: `http://localhost:5173`
 - ⚙️ Backend API: `http://localhost:5000`
 
----
 
 ## 🌱 Tài khoản mẫu (Tự động được tạo)
 
