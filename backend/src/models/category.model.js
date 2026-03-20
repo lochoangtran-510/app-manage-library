@@ -7,6 +7,11 @@ const Category = sequelize.define('Category', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
+  categoryCode: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,

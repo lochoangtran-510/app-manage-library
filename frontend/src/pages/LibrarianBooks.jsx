@@ -20,7 +20,7 @@ const LibrarianBooks = () => {
   const [bookFormData, setBookFormData] = useState({
     title: '', author: '', isbn: '', publisher: '', publishYear: '', categoryId: '', pageCount: '', bookSize: '', initialCopies: 1
   });
-  const [catFormData, setCatFormData] = useState({ name: '', description: '' });
+  const [catFormData, setCatFormData] = useState({ categoryCode: '', name: '', description: '' });
 
   const axiosConfig = {
     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -111,7 +111,7 @@ const LibrarianBooks = () => {
 
   const resetForms = () => {
     setBookFormData({ title: '', author: '', isbn: '', publisher: '', publishYear: '', categoryId: '', pageCount: '', bookSize: '', initialCopies: 1 });
-    setCatFormData({ name: '', description: '' });
+    setCatFormData({ categoryCode: '', name: '', description: '' });
     setEditingId(null);
   };
 
@@ -236,6 +236,7 @@ const LibrarianBooks = () => {
             <table className="w-full text-left">
               <thead className="bg-slate-50 border-b border-slate-100">
                 <tr>
+                  <th className="px-6 py-4 font-bold text-slate-700">Mã CN</th>
                   <th className="px-6 py-4 font-bold text-slate-700">Tên chuyên ngành</th>
                   <th className="px-6 py-4 font-bold text-slate-700">Mô tả</th>
                   <th className="px-6 py-4 font-bold text-slate-700 text-right">Thao tác</th>
@@ -244,6 +245,9 @@ const LibrarianBooks = () => {
               <tbody className="divide-y divide-slate-100">
                 {categories.map(cat => (
                   <tr key={cat.id} className="hover:bg-slate-50/50 transition-colors text-sm">
+                    <td className="px-6 py-4 font-mono font-bold text-slate-500">
+                      {cat.categoryCode}
+                    </td>
                     <td className="px-6 py-4 font-bold text-slate-800 flex items-center gap-2">
                        <TagIcon size={14} className="text-primary-500" /> {cat.name}
                     </td>
@@ -334,6 +338,10 @@ const LibrarianBooks = () => {
       {/* Modal Chuyên ngành (UC13) */}
       <Modal isOpen={isCatModalOpen} onClose={() => setIsCatModalOpen(false)} title="Thông tin Chuyên ngành">
         <form onSubmit={handleCatSubmit} className="space-y-4">
+          <div>
+            <label className="text-sm font-bold text-slate-700 mb-1">Mã chuyên ngành</label>
+            <input type="text" required placeholder="VD: CNTT, TOAN..." className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl" value={catFormData.categoryCode} onChange={e => setCatFormData({...catFormData, categoryCode: e.target.value.toUpperCase()})}/>
+          </div>
           <div>
             <label className="text-sm font-bold text-slate-700 mb-1">Tên chuyên ngành</label>
             <input type="text" required className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl" value={catFormData.name} onChange={e => setCatFormData({...catFormData, name: e.target.value})}/>
