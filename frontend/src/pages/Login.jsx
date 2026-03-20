@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { LogIn, User, Lock, AlertCircle } from 'lucide-react';
+import { Library, LogIn, User, Lock, AlertCircle } from 'lucide-react';
 import API_BASE_URL from '../api/config';
 
 const Login = () => {

@@ -9,7 +9,7 @@ const Category = sequelize.define('Category', {
   },
   categoryCode: {
     type: DataTypes.STRING,
-    allowNull: false,
+    defaultValue: 'GENERAL',
     unique: true,
   },
   name: {
