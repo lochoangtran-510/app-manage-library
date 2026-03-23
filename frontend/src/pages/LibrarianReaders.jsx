@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { User, Users, Search, Plus, Edit, Trash2, Calendar, MapPin, Tag } from 'lucide-react';
+import { User, Users, Search, Plus, Edit, Trash2, Calendar, MapPin, Tag, CreditCard, Printer, UserCircle } from 'lucide-react';
 import API_BASE_URL from '../api/config';
 import Modal from '../components/Modal';
 
