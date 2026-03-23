@@ -24,11 +24,14 @@ git clone https://github.com/lochoangtran-510/app-manage-library.git
 cd app-manage-library
 ```
 
-**Bước 2:** Chạy toàn bộ hệ thống chỉ bằng một lệnh duy nhất:
+**Bước 2:** Xóa toàn bộ build cache của Docker (quan trọng!), rồi build và chạy:
 ```bash
+docker builder prune -a -f
 docker-compose up --build -d
 ```
-*(Hệ thống tự động cài đặt PostgreSQL, Backend và Frontend. Chờ khoảng 1-2 phút.)*
+*(Chờ khoảng 2-3 phút để Docker tải và cài đặt mọi thứ)*
+
+> ⚠️ **Lưu ý:** Lệnh `docker builder prune -a -f` là bắt buộc để Docker xây hình ảnh hoàn toàn mới từ code mới nhất, tránh trường hợp bị dùng nhầm cache cũ.
 
 **Bước 3:** Mở trình duyệt và truy cập:
 - 🌐 Giao diện người dùng: `http://localhost:5173`
